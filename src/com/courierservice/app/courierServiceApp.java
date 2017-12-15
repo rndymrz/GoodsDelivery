@@ -9,7 +9,10 @@ import com.courierservice.dao.PaketDao;
 import com.courierservice.dao.TarifFileDao;
 import com.courierservice.model.MasterCourier;
 import com.courierservice.model.Paket;
+import java.text.DecimalFormat;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,10 +24,10 @@ public class courierServiceApp extends javax.swing.JFrame {
     MasterCourier[] kota;
     MasterCourier[] jenisLayanan;
     MasterCourier masCou = new MasterCourier();
+    DecimalFormat df = new DecimalFormat("###,###,###.##");
+    double hargaPaket;
     //private String indexTipePengiriman;
 
-    
-    
     /**
      * Creates new form courierServiceApp
      */
@@ -47,55 +50,58 @@ public class courierServiceApp extends javax.swing.JFrame {
 
         asuransiButtonGroup = new javax.swing.ButtonGroup();
         pembayaranButtonGroup = new javax.swing.ButtonGroup();
+        hasilDialog = new javax.swing.JDialog();
+        selesaiButton = new javax.swing.JButton();
+        noPaketHasilLabel = new javax.swing.JLabel();
         pengirimPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        namaPengirimTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        alamatPengirimTextArea = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        provinsiPengirimTextField = new javax.swing.JTextField();
+        kodePosPengirimTextField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jTextField5 = new javax.swing.JTextField();
+        kotaPengirimTextField = new javax.swing.JTextField();
+        submitPengirimButton = new javax.swing.JButton();
+        noTelpTextField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         penerimaPanel = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        namaPenerimaTextField = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        alamatPenerimaTextArea = new javax.swing.JTextArea();
         jLabel13 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        provinsiPenerimaTextField = new javax.swing.JTextField();
+        kodePosPenerimaTextField = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jTextField10 = new javax.swing.JTextField();
+        kotaPenerimaTextField = new javax.swing.JTextField();
+        submitPenerimaButton = new javax.swing.JButton();
+        noTelpPenerimaTextField = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        noPaketTextField = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jenisPaketComboBox = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        tanggalKirimDateChooser = new com.toedter.calendar.JDateChooser();
         kotaTujuanComboBox = new javax.swing.JComboBox<>(kotaTujuan.toArray());
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
+        pTextField = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
+        lTextField = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
+        tTextField = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
@@ -118,11 +124,45 @@ public class courierServiceApp extends javax.swing.JFrame {
         sdsButton = new javax.swing.JButton();
         onsButton = new javax.swing.JButton();
         hdsButton = new javax.swing.JButton();
+        jLabel29 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+
+        hasilDialog.setMinimumSize(new java.awt.Dimension(400, 300));
+
+        selesaiButton.setText("Selesai");
+        selesaiButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selesaiButtonActionPerformed(evt);
+            }
+        });
+
+        noPaketHasilLabel.setText("No Paket");
+
+        javax.swing.GroupLayout hasilDialogLayout = new javax.swing.GroupLayout(hasilDialog.getContentPane());
+        hasilDialog.getContentPane().setLayout(hasilDialogLayout);
+        hasilDialogLayout.setHorizontalGroup(
+            hasilDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(hasilDialogLayout.createSequentialGroup()
+                .addGroup(hasilDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(hasilDialogLayout.createSequentialGroup()
+                        .addGap(167, 167, 167)
+                        .addComponent(selesaiButton))
+                    .addGroup(hasilDialogLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(noPaketHasilLabel)))
+                .addContainerGap(168, Short.MAX_VALUE))
+        );
+        hasilDialogLayout.setVerticalGroup(
+            hasilDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, hasilDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(noPaketHasilLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
+                .addComponent(selesaiButton)
+                .addGap(43, 43, 43))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -139,15 +179,20 @@ public class courierServiceApp extends javax.swing.JFrame {
 
         jLabel5.setText("Kota");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        alamatPengirimTextArea.setColumns(20);
+        alamatPengirimTextArea.setRows(5);
+        jScrollPane1.setViewportView(alamatPengirimTextArea);
 
         jLabel7.setText("Provinsi");
 
         jLabel6.setText("Kode Pos");
 
-        jButton1.setText("SIMPAN");
+        submitPengirimButton.setText("SIMPAN");
+        submitPengirimButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitPengirimButtonActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("No Telepon");
 
@@ -162,7 +207,7 @@ public class courierServiceApp extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(206, 206, 206))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pengirimPanelLayout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(submitPengirimButton)
                         .addGap(190, 190, 190))))
             .addGroup(pengirimPanelLayout.createSequentialGroup()
                 .addGap(58, 58, 58)
@@ -176,11 +221,11 @@ public class courierServiceApp extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(pengirimPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(provinsiPengirimTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(kodePosPengirimTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(noTelpTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kotaPengirimTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(namaPengirimTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 60, Short.MAX_VALUE))
         );
         pengirimPanelLayout.setVerticalGroup(
@@ -191,29 +236,29 @@ public class courierServiceApp extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pengirimPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(namaPengirimTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pengirimPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pengirimPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kodePosPengirimTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pengirimPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kotaPengirimTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pengirimPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(provinsiPengirimTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pengirimPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(noTelpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(submitPengirimButton)
                 .addGap(22, 22, 22))
         );
 
@@ -230,15 +275,33 @@ public class courierServiceApp extends javax.swing.JFrame {
 
         jLabel12.setText("Kota");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        namaPenerimaTextField.setEnabled(false);
+
+        alamatPenerimaTextArea.setColumns(20);
+        alamatPenerimaTextArea.setRows(5);
+        alamatPenerimaTextArea.setEnabled(false);
+        jScrollPane2.setViewportView(alamatPenerimaTextArea);
 
         jLabel13.setText("Provinsi");
 
+        provinsiPenerimaTextField.setEnabled(false);
+
+        kodePosPenerimaTextField.setEnabled(false);
+
         jLabel14.setText("Kode Pos");
 
-        jButton2.setText("SIMPAN");
+        kotaPenerimaTextField.setEnabled(false);
+
+        submitPenerimaButton.setText("SIMPAN");
+        submitPenerimaButton.setEnabled(false);
+        submitPenerimaButton.setFocusPainted(false);
+        submitPenerimaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitPenerimaButtonActionPerformed(evt);
+            }
+        });
+
+        noTelpPenerimaTextField.setEnabled(false);
 
         jLabel15.setText("No Telepon");
 
@@ -253,7 +316,7 @@ public class courierServiceApp extends javax.swing.JFrame {
                         .addComponent(jLabel9)
                         .addGap(206, 206, 206))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, penerimaPanelLayout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(submitPenerimaButton)
                         .addGap(190, 190, 190))))
             .addGroup(penerimaPanelLayout.createSequentialGroup()
                 .addGap(42, 42, 42)
@@ -266,12 +329,12 @@ public class courierServiceApp extends javax.swing.JFrame {
                     .addComponent(jLabel15))
                 .addGap(48, 48, 48)
                 .addGroup(penerimaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(kotaPenerimaTextField, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(kodePosPenerimaTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(noTelpPenerimaTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(namaPenerimaTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(provinsiPenerimaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 59, Short.MAX_VALUE))
         );
         penerimaPanelLayout.setVerticalGroup(
@@ -279,32 +342,32 @@ public class courierServiceApp extends javax.swing.JFrame {
             .addGroup(penerimaPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(penerimaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(namaPenerimaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(penerimaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(penerimaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kodePosPenerimaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(penerimaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kotaPenerimaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(penerimaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(provinsiPenerimaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(penerimaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(noTelpPenerimaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(submitPenerimaButton)
                 .addGap(22, 22, 22))
         );
 
@@ -316,14 +379,20 @@ public class courierServiceApp extends javax.swing.JFrame {
 
         jLabel16.setText("No Paket");
 
+        noPaketTextField.setEnabled(false);
+
         jLabel17.setText("Kota Tujuan");
 
         jLabel18.setText("Jenis Paket");
 
         jenisPaketComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lain-Lain", "Dokumen", "Elektronik", "Makanan" }));
+        jenisPaketComboBox.setEnabled(false);
 
         jLabel19.setText("Tanggal Kirim");
 
+        tanggalKirimDateChooser.setEnabled(false);
+
+        kotaTujuanComboBox.setEnabled(false);
         kotaTujuanComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 kotaTujuanComboBoxActionPerformed(evt);
@@ -334,9 +403,15 @@ public class courierServiceApp extends javax.swing.JFrame {
 
         jLabel21.setText("P :");
 
+        pTextField.setEnabled(false);
+
         jLabel22.setText("L :");
 
+        lTextField.setEnabled(false);
+
         jLabel23.setText("T :");
+
+        tTextField.setEnabled(false);
 
         jLabel24.setText("cm");
 
@@ -344,6 +419,7 @@ public class courierServiceApp extends javax.swing.JFrame {
 
         jLabel26.setText("cm");
 
+        beratTextField.setEnabled(false);
         beratTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 beratTextFieldActionPerformed(evt);
@@ -358,6 +434,7 @@ public class courierServiceApp extends javax.swing.JFrame {
 
         asuransiButtonGroup.add(yaRadioButton);
         yaRadioButton.setText("Ya");
+        yaRadioButton.setEnabled(false);
         yaRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 yaRadioButtonActionPerformed(evt);
@@ -366,6 +443,7 @@ public class courierServiceApp extends javax.swing.JFrame {
 
         asuransiButtonGroup.add(tidakRadioButton);
         tidakRadioButton.setText("Tidak");
+        tidakRadioButton.setEnabled(false);
         tidakRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tidakRadioButtonActionPerformed(evt);
@@ -380,12 +458,15 @@ public class courierServiceApp extends javax.swing.JFrame {
 
         pembayaranButtonGroup.add(cashRadioButton);
         cashRadioButton.setText("Cash");
+        cashRadioButton.setEnabled(false);
 
         pembayaranButtonGroup.add(debitRadioButton);
         debitRadioButton.setText("Debit");
+        debitRadioButton.setEnabled(false);
 
         pembayaranButtonGroup.add(creditCardRadioButton);
         creditCardRadioButton.setText("Credit Card");
+        creditCardRadioButton.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -402,9 +483,9 @@ public class courierServiceApp extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(103, 103, 103)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(noPaketTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                                        .addComponent(tanggalKirimDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                                         .addComponent(jenisPaketComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(kotaTujuanComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -419,11 +500,11 @@ public class courierServiceApp extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel25))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel26))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -437,7 +518,7 @@ public class courierServiceApp extends javax.swing.JFrame {
                             .addGap(18, 18, 18)
                             .addComponent(jLabel21)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -473,17 +554,17 @@ public class courierServiceApp extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(noPaketTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20)
                     .addComponent(jLabel21)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel22)
-                            .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel25)
                             .addComponent(jLabel30)
                             .addComponent(yaRadioButton)
@@ -491,7 +572,7 @@ public class courierServiceApp extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel23)
-                            .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel26)
                             .addComponent(jLabel31)
                             .addComponent(hargaBarangTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -515,8 +596,8 @@ public class courierServiceApp extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel19)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(48, Short.MAX_VALUE))
+                            .addComponent(tanggalKirimDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jLabel33.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
@@ -524,50 +605,62 @@ public class courierServiceApp extends javax.swing.JFrame {
 
         hargaLabel.setText("Total Tarif");
 
-        regulerButton.setText("Reguler");
+        regulerButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        regulerButton.setText("REGULER");
+        regulerButton.setEnabled(false);
         regulerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 regulerButtonActionPerformed(evt);
             }
         });
 
-        kilatButton.setText("Kilat");
+        kilatButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        kilatButton.setText("KILAT");
+        kilatButton.setEnabled(false);
         kilatButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 kilatButtonActionPerformed(evt);
             }
         });
 
+        sdsButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         sdsButton.setText("SDS");
+        sdsButton.setEnabled(false);
         sdsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sdsButtonActionPerformed(evt);
             }
         });
 
+        onsButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         onsButton.setText("ONS");
+        onsButton.setEnabled(false);
         onsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 onsButtonActionPerformed(evt);
             }
         });
 
+        hdsButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         hdsButton.setText("HDS");
+        hdsButton.setEnabled(false);
         hdsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 hdsButtonActionPerformed(evt);
             }
         });
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel29.setText("PILIH JENIS LAYANAN");
 
         jMenu3.setText("Menu");
 
-        jMenuItem1.setText("subMenu");
+        jMenuItem1.setText("Exit");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem1);
 
         jMenuBar1.add(jMenu3);
@@ -581,52 +674,62 @@ public class courierServiceApp extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pengirimPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(penerimaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel33)
-                .addGap(412, 412, 412))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(pengirimPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(penerimaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel33)
+                        .addGap(410, 410, 410))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(regulerButton)
-                .addGap(50, 50, 50)
-                .addComponent(kilatButton)
-                .addGap(47, 47, 47)
-                .addComponent(sdsButton)
-                .addGap(47, 47, 47)
-                .addComponent(onsButton)
-                .addGap(45, 45, 45)
-                .addComponent(hdsButton)
-                .addGap(37, 37, 37)
-                .addComponent(hargaLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(367, 367, 367)
+                        .addComponent(jLabel29))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(152, 152, 152)
+                        .addComponent(regulerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(kilatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sdsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(onsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(hdsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(437, 437, 437)
+                        .addComponent(hargaLabel)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel33)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pengirimPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(penerimaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pengirimPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(penerimaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(hargaLabel)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(regulerButton)
-                        .addComponent(kilatButton)
-                        .addComponent(sdsButton)
-                        .addComponent(onsButton)
-                        .addComponent(hdsButton)))
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(regulerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sdsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(onsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hdsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kilatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(hargaLabel)
+                .addContainerGap(177, Short.MAX_VALUE))
         );
 
         pack();
@@ -639,23 +742,27 @@ public class courierServiceApp extends javax.swing.JFrame {
     private void regulerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regulerButtonActionPerformed
 
         if (yaRadioButton.isSelected()) {
-            
+
             Paket pak = new Paket();
             PaketDao pd = new PaketDao();
             String kotaTuj = String.valueOf(kotaTujuanComboBox.getSelectedItem());
             String beratStr = beratTextField.getText();
             String hargaStr = hargaBarangTextField.getText();
             double harga = Double.parseDouble(hargaStr);
-            
 
             int berat = Integer.parseInt(beratStr);
-            
+
             pak.setHargaBarang(harga);
             double hargaAsuransi = pak.getaAsuransi();
-            
-            masCou = pd.hitungBiaya(kotaTuj, berat);
 
-            hargaLabel.setText("Rp " + (masCou.getReguler()+hargaAsuransi));
+            masCou = pd.hitungBiaya(kotaTuj, berat);
+            hargaPaket = masCou.getReguler() + hargaAsuransi;
+
+            hargaLabel.setText("Rp " + df.format(hargaPaket));
+
+            hasilDialog.dispose();
+            hasilDialog.setVisible(true);
+            noPaketHasilLabel.setText("Rp " + df.format(hargaPaket));
 
         } else {
 
@@ -666,7 +773,7 @@ public class courierServiceApp extends javax.swing.JFrame {
             int berat = Integer.parseInt(beratStr);
             masCou = pd.hitungBiaya(kotaTuj, berat);
 
-            hargaLabel.setText("Rp " + masCou.getReguler());
+            hargaLabel.setText("Rp " + df.format(masCou.getReguler()));
         }
         //System.out.println("Harga = " + masCou.hargaReguler());
 
@@ -680,23 +787,22 @@ public class courierServiceApp extends javax.swing.JFrame {
     private void kilatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kilatButtonActionPerformed
         // TODO add your handling code here:
         if (yaRadioButton.isSelected()) {
-            
+
             Paket pak = new Paket();
             PaketDao pd = new PaketDao();
             String kotaTuj = String.valueOf(kotaTujuanComboBox.getSelectedItem());
             String beratStr = beratTextField.getText();
             String hargaStr = hargaBarangTextField.getText();
             double harga = Double.parseDouble(hargaStr);
-            
 
             int berat = Integer.parseInt(beratStr);
-            
+
             pak.setHargaBarang(harga);
             double hargaAsuransi = pak.getaAsuransi();
-            
+
             masCou = pd.hitungBiaya(kotaTuj, berat);
 
-            hargaLabel.setText("Rp " + (masCou.getKilat()+hargaAsuransi));
+            hargaLabel.setText("Rp " + df.format((masCou.getKilat() + hargaAsuransi)));
 
         } else {
 
@@ -707,7 +813,7 @@ public class courierServiceApp extends javax.swing.JFrame {
             int berat = Integer.parseInt(beratStr);
             masCou = pd.hitungBiaya(kotaTuj, berat);
 
-            hargaLabel.setText("Rp " + masCou.getKilat());
+            hargaLabel.setText("Rp " + df.format(masCou.getKilat()));
         }
 
     }//GEN-LAST:event_kilatButtonActionPerformed
@@ -715,23 +821,22 @@ public class courierServiceApp extends javax.swing.JFrame {
     private void sdsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sdsButtonActionPerformed
         // TODO add your handling code here:
         if (yaRadioButton.isSelected()) {
-            
+
             Paket pak = new Paket();
             PaketDao pd = new PaketDao();
             String kotaTuj = String.valueOf(kotaTujuanComboBox.getSelectedItem());
             String beratStr = beratTextField.getText();
             String hargaStr = hargaBarangTextField.getText();
             double harga = Double.parseDouble(hargaStr);
-            
 
             int berat = Integer.parseInt(beratStr);
-            
+
             pak.setHargaBarang(harga);
             double hargaAsuransi = pak.getaAsuransi();
-            
+
             masCou = pd.hitungBiaya(kotaTuj, berat);
 
-            hargaLabel.setText("Rp " + (masCou.getSds()+hargaAsuransi));
+            hargaLabel.setText("Rp " + df.format((masCou.getSds() + hargaAsuransi)));
 
         } else {
 
@@ -742,29 +847,28 @@ public class courierServiceApp extends javax.swing.JFrame {
             int berat = Integer.parseInt(beratStr);
             masCou = pd.hitungBiaya(kotaTuj, berat);
 
-            hargaLabel.setText("Rp " + masCou.getSds());
+            hargaLabel.setText("Rp " + df.format(masCou.getSds()));
         }
     }//GEN-LAST:event_sdsButtonActionPerformed
 
     private void onsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onsButtonActionPerformed
         if (yaRadioButton.isSelected()) {
-            
+
             Paket pak = new Paket();
             PaketDao pd = new PaketDao();
             String kotaTuj = String.valueOf(kotaTujuanComboBox.getSelectedItem());
             String beratStr = beratTextField.getText();
             String hargaStr = hargaBarangTextField.getText();
             double harga = Double.parseDouble(hargaStr);
-            
 
             int berat = Integer.parseInt(beratStr);
-            
+
             pak.setHargaBarang(harga);
             double hargaAsuransi = pak.getaAsuransi();
-            
+
             masCou = pd.hitungBiaya(kotaTuj, berat);
 
-            hargaLabel.setText("Rp " + (masCou.getOns()+hargaAsuransi));
+            hargaLabel.setText("Rp " + df.format((masCou.getOns() + hargaAsuransi)));
 
         } else {
 
@@ -775,30 +879,29 @@ public class courierServiceApp extends javax.swing.JFrame {
             int berat = Integer.parseInt(beratStr);
             masCou = pd.hitungBiaya(kotaTuj, berat);
 
-            hargaLabel.setText("Rp " + masCou.getOns());
+            hargaLabel.setText("Rp " + df.format(masCou.getOns()));
         }
 
     }//GEN-LAST:event_onsButtonActionPerformed
 
     private void hdsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hdsButtonActionPerformed
         if (yaRadioButton.isSelected()) {
-            
+
             Paket pak = new Paket();
             PaketDao pd = new PaketDao();
             String kotaTuj = String.valueOf(kotaTujuanComboBox.getSelectedItem());
             String beratStr = beratTextField.getText();
             String hargaStr = hargaBarangTextField.getText();
             double harga = Double.parseDouble(hargaStr);
-            
 
             int berat = Integer.parseInt(beratStr);
-            
+
             pak.setHargaBarang(harga);
             double hargaAsuransi = pak.getaAsuransi();
-            
+
             masCou = pd.hitungBiaya(kotaTuj, berat);
 
-            hargaLabel.setText("Rp " + (masCou.getHds()+hargaAsuransi));
+            hargaLabel.setText("Rp " + df.format((masCou.getHds() + hargaAsuransi)));
 
         } else {
 
@@ -809,7 +912,7 @@ public class courierServiceApp extends javax.swing.JFrame {
             int berat = Integer.parseInt(beratStr);
             masCou = pd.hitungBiaya(kotaTuj, berat);
 
-            hargaLabel.setText("Rp " + masCou.getHds());
+            hargaLabel.setText("Rp " + df.format(masCou.getHds()));
         }
 
     }//GEN-LAST:event_hdsButtonActionPerformed
@@ -823,6 +926,101 @@ public class courierServiceApp extends javax.swing.JFrame {
         // TODO add your handling code here:
         hargaBarangTextField.setEnabled(false);
     }//GEN-LAST:event_tidakRadioButtonActionPerformed
+
+    private void submitPengirimButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitPengirimButtonActionPerformed
+        // TODO add your handling code here:
+        if (namaPengirimTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Masukkan Nama Pengirim");
+        } else if (alamatPengirimTextArea.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Masukkan Dulu Alamat Pengirim");
+        } else if (kodePosPengirimTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Masukkan Kode Pos Pengirim");
+        } else if (kotaPengirimTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Masukkan Kota Pengirim");
+        } else if (kotaPengirimTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Masukkan Provinsi Pengirim");
+        } else if (noTelpTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Masukkan Notelp Pengirim");
+        } else {
+
+            JOptionPane.showMessageDialog(null, "Data Telah Ditambah");
+            namaPengirimTextField.setEnabled(false);
+            alamatPengirimTextArea.setEnabled(false);
+            kodePosPengirimTextField.setEnabled(false);
+            kotaPengirimTextField.setEnabled(false);
+            provinsiPengirimTextField.setEnabled(false);
+            noTelpTextField.setEnabled(false);
+            submitPengirimButton.setEnabled(false);
+            namaPenerimaTextField.setEnabled(true);
+            alamatPenerimaTextArea.setEnabled(true);
+            kodePosPenerimaTextField.setEnabled(true);
+            kotaPenerimaTextField.setEnabled(true);
+            provinsiPenerimaTextField.setEnabled(true);
+            noTelpPenerimaTextField.setEnabled(true);
+            submitPenerimaButton.setEnabled(true);
+        }
+    }//GEN-LAST:event_submitPengirimButtonActionPerformed
+
+    private void submitPenerimaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitPenerimaButtonActionPerformed
+        // TODO add your handling code here:
+        if (namaPenerimaTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Masukkan Nama Penerima");
+        } else if (alamatPenerimaTextArea.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Masukkan Dulu Alamat Penerima");
+        } else if (kodePosPenerimaTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Masukkan Kode Pos Penerima");
+        } else if (kotaPenerimaTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Masukkan Kota Penerima");
+        } else if (kotaPenerimaTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Masukkan Provinsi Penerima");
+        } else if (noTelpPenerimaTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Masukkan Notelp Penerima");
+        } else {
+
+            JOptionPane.showMessageDialog(null, "Data Telah Ditambah");
+            namaPenerimaTextField.setEnabled(false);
+            alamatPenerimaTextArea.setEnabled(false);
+            kodePosPenerimaTextField.setEnabled(false);
+            kotaPenerimaTextField.setEnabled(false);
+            provinsiPenerimaTextField.setEnabled(false);
+            noTelpPenerimaTextField.setEnabled(false);
+            submitPenerimaButton.setEnabled(false);
+
+            noPaketTextField.setEnabled(true);
+            kotaTujuanComboBox.setEnabled(true);
+            jenisPaketComboBox.setEnabled(true);
+            tanggalKirimDateChooser.setEnabled(true);
+            pTextField.setEnabled(true);
+            lTextField.setEnabled(true);
+            tTextField.setEnabled(true);
+            beratTextField.setEnabled(true);
+            yaRadioButton.setEnabled(true);
+            tidakRadioButton.setEnabled(true);
+            hargaBarangTextField.setEnabled(true);
+            cashRadioButton.setEnabled(true);
+            debitRadioButton.setEnabled(true);
+            creditCardRadioButton.setEnabled(true);
+
+            regulerButton.setEnabled(true);
+            kilatButton.setEnabled(true);
+            sdsButton.setEnabled(true);
+            onsButton.setEnabled(true);
+            hdsButton.setEnabled(true);
+            hargaBarangTextField.setEnabled(false);
+        }
+
+    }//GEN-LAST:event_submitPenerimaButtonActionPerformed
+
+    private void selesaiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selesaiButtonActionPerformed
+
+        System.exit(0);
+
+    }//GEN-LAST:event_selesaiButtonActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -860,6 +1058,8 @@ public class courierServiceApp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea alamatPenerimaTextArea;
+    private javax.swing.JTextArea alamatPengirimTextArea;
     private javax.swing.ButtonGroup asuransiButtonGroup;
     private javax.swing.JTextField beratTextField;
     private javax.swing.JRadioButton cashRadioButton;
@@ -867,10 +1067,8 @@ public class courierServiceApp extends javax.swing.JFrame {
     private javax.swing.JRadioButton debitRadioButton;
     private javax.swing.JTextField hargaBarangTextField;
     private javax.swing.JLabel hargaLabel;
+    private javax.swing.JDialog hasilDialog;
     private javax.swing.JButton hdsButton;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -892,6 +1090,7 @@ public class courierServiceApp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
@@ -903,39 +1102,40 @@ public class courierServiceApp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JComboBox<String> jenisPaketComboBox;
     private javax.swing.JButton kilatButton;
+    private javax.swing.JTextField kodePosPenerimaTextField;
+    private javax.swing.JTextField kodePosPengirimTextField;
+    private javax.swing.JTextField kotaPenerimaTextField;
+    private javax.swing.JTextField kotaPengirimTextField;
     private javax.swing.JComboBox<Object> kotaTujuanComboBox;
+    private javax.swing.JTextField lTextField;
+    private javax.swing.JTextField namaPenerimaTextField;
+    private javax.swing.JTextField namaPengirimTextField;
+    private javax.swing.JLabel noPaketHasilLabel;
+    private javax.swing.JTextField noPaketTextField;
+    private javax.swing.JTextField noTelpPenerimaTextField;
+    private javax.swing.JTextField noTelpTextField;
     private javax.swing.JButton onsButton;
+    private javax.swing.JTextField pTextField;
     private javax.swing.ButtonGroup pembayaranButtonGroup;
     private javax.swing.JPanel penerimaPanel;
     private javax.swing.JPanel pengirimPanel;
+    private javax.swing.JTextField provinsiPenerimaTextField;
+    private javax.swing.JTextField provinsiPengirimTextField;
     private javax.swing.JButton regulerButton;
     private javax.swing.JButton sdsButton;
+    private javax.swing.JButton selesaiButton;
+    private javax.swing.JButton submitPenerimaButton;
+    private javax.swing.JButton submitPengirimButton;
+    private javax.swing.JTextField tTextField;
+    private com.toedter.calendar.JDateChooser tanggalKirimDateChooser;
     private javax.swing.JRadioButton tidakRadioButton;
     private javax.swing.JRadioButton yaRadioButton;
     // End of variables declaration//GEN-END:variables
